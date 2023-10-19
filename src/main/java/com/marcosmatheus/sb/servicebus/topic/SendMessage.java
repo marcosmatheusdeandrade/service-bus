@@ -1,4 +1,4 @@
-package com.marcosmatheus.sb.servicebus.topic.publisher;
+package com.marcosmatheus.sb.servicebus.topic;
 
 import com.azure.messaging.servicebus.ServiceBusClientBuilder;
 import com.azure.messaging.servicebus.ServiceBusMessage;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Publisher {
+public class SendMessage {
 
     @Value("${topic}")
     public String topicName;
@@ -15,7 +15,7 @@ public class Publisher {
     @Value("${connectionString}")
     private String connectionString;
 
-    public void publishMessage(String message) {
+    void sendMessage(String message) {
         ServiceBusSenderClient senderClient = new ServiceBusClientBuilder()
                 .connectionString(connectionString)
                 .sender()
@@ -23,6 +23,5 @@ public class Publisher {
                 .buildClient();
 
         senderClient.sendMessage(new ServiceBusMessage(message));
-        senderClient.close();
     }
 }
